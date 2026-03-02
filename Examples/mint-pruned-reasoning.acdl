@@ -24,4 +24,5 @@ MintPrunedReasoning[@T]: {
         U: sys.tool_used[@T.k].tool_response
     }
 
+
 }
