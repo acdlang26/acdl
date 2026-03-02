@@ -2080,7 +2080,8 @@ var ACDL = (() => {
   __export(standalone_entry_exports, {
     Parser: () => Parser,
     Scanner: () => Scanner,
-    renderPrompt: () => renderPrompt
+    renderPrompt: () => renderPrompt,
+    renderPrompts: () => renderPrompts
   });
 
   // src/scanner.ts
@@ -3402,6 +3403,23 @@ var ACDL = (() => {
     const bodyHtml = renderPromptBody(prompt2.body);
     return `<div class="prompt-container prompt-style-${style}">${titleHtml}${bodyHtml}</div>`;
   }
+  function renderPrompts(blocks, style = "default") {
+    const parts = [];
+    let lastWasPrompt = false;
+    for (const block of blocks) {
+      if (block.kind === "prompt") {
+        if (lastWasPrompt) {
+          parts.push('<div class="prompt-divider"></div>');
+        }
+        parts.push(renderPrompt(block, style));
+        lastWasPrompt = true;
+      } else if (block.kind === "comment-block") {
+        parts.push(`<div class="file-comment">// ${escapeHtml(block.text)}</div>`);
+        lastWasPrompt = false;
+      }
+    }
+    return parts.join("");
+  }
   function escapeHtml(text) {
     return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
@@ -4205,8 +4223,7 @@ const PROMPTS = {
     }
 
 }`,
-  "multiagent": `// agent is self, agent2 is who we converse with
-MultiAgent[@T, agent]: {
+  "multiagent": `MultiAgent[@T, agent]: {
   S: {
     INSTRUCTIONS
   }
@@ -4402,8 +4419,8 @@ T: {
 
   <!-- UI Logic -->
   <script>
-// Extract Parser and renderPrompt from the bundle
-const { Parser, renderPrompt } = ACDL;
+// Extract Parser and renderPrompts from the bundle
+const { Parser, renderPrompts } = ACDL;
 
 function escapeHtml(text) {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -4435,8 +4452,8 @@ function doRender() {
   }
   try {
     const parser = new Parser(input);
-    const ast = parser.parsePrompt();
-    const html = renderPrompt(ast);
+    const ast = parser.parseFile();
+    const html = renderPrompts(ast);
     output.innerHTML = html;
     enableCollapsibleBlocks();
   } catch (err) {
