@@ -7,129 +7,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/styles.css">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a0a;
-      color: #fafafa;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(10, 10, 10, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .nav-logo {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-    }
-
-    .nav-links a {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: #fff; }
-    .nav-links a.active { color: #fff; }
-
-    .nav-links a.external::after {
-      content: '';
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin-left: 4px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      vertical-align: middle;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-
-    .nav-links a.external:hover::after {
-      opacity: 1;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 140px 24px 80px;
-      text-align: center;
-      background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15), transparent);
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-      background: linear-gradient(to bottom right, #fff 30%, rgba(255,255,255,0.4));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      color: rgba(255,255,255,0.5);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Section */
-    .section {
-      padding: 80px 24px;
-    }
-
-    .section-light {
-      background: #fafafa;
-      color: #0a0a0a;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    /* Page-specific styles */
     .section-header {
+      text-align: left;
       margin-bottom: 40px;
     }
 
     .section-header h2 {
       font-size: 1.75rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
       margin-bottom: 8px;
       color: #0a0a0a;
     }
 
     .section-header p {
       font-size: 1rem;
-      color: rgba(10,10,10,0.6);
     }
 
     /* Example cards */
@@ -215,6 +108,9 @@
       line-height: 1.5;
       color: #d4d4d4;
       margin: 0;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
     }
 
     .example-card-footer {
@@ -273,67 +169,28 @@
       text-decoration: underline;
     }
 
-    /* Footer */
-    footer {
-      padding: 48px 24px;
-      text-align: center;
-      background: #0a0a0a;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    footer p {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.4);
-    }
-
-    footer a {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-    }
-
-    footer a:hover { color: #fff; }
-
-    footer a.external::after,
-    .more-link a.external::after {
-      content: '';
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin-left: 4px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      vertical-align: middle;
-    }
-
     .more-link a.external::after {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(10,10,10,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
     }
 
-    /* Responsive */
     @media (max-width: 900px) {
       .examples-grid {
         grid-template-columns: 1fr;
       }
-      .nav-links { display: none; }
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
   <nav>
-    <a href="../index.html" class="nav-logo">ACDL</a>
-    <div class="nav-links">
-      <a href="../visualizer.html">Live Editor</a>
-      <a href="../docs/SyntaxReference.html">Documentation</a>
-      <a href="index.html" class="active">Examples</a>
-      <a href="../vscode.html">VSCode</a>
-      <a href="https://github.com/acdlang26/acdl" class="external">GitHub</a>
-    </div>
-  </nav>
+  <a href="../index.html" class="nav-logo">ACDL</a>
+  <div class="nav-links">
+    <a href="../visualizer.html" class="external">Live Editor</a>
+    <a href="../syntax-reference.html">Documentation</a>
+    <a href="../examples/index.html">Examples</a>
+    <a href="../vscode.html">VSCode</a>
+    <a href="https://github.com/acdlang26/acdl" class="external">GitHub</a>
+  </div>
+</nav>
 
   <section class="hero">
     <h1>ACDL Examples</h1>
@@ -648,7 +505,7 @@
   </section>
 
   <footer>
-    <p>ACDL — Agentic Context Description Language · <a href="https://github.com/acdlang26/acdl" class="external">GitHub</a></p>
-  </footer>
+  <p>ACDL &mdash; Agentic Context Description Language &middot; <a href="https://github.com/acdlang26/acdl" class="external">GitHub</a></p>
+</footer>
 </body>
 </html>
